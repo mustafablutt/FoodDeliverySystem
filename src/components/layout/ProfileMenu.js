@@ -116,7 +116,7 @@ export default function StyledProfileMenu() {
           </Typography>
           <Divider sx={{ my: 0.5 }} />
           <Link
-            to="/coupon-list"
+            to="/coupons"
             style={{
               cursor: 'pointer',
               textDecoration: 'none',

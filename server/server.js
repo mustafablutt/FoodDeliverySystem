@@ -19,6 +19,9 @@ import {
   removeByQuantity,
   removeItemFromCart,
 } from './controllers/cartController.js';
+
+import { createCoupon, getCoupons } from './controllers/couponController.js';
+
 import cors from 'cors';
 
 dotenv.config();
@@ -50,6 +53,10 @@ app.post('/removeitemfromcart', authMiddleware, removeItemFromCart);
 app.post('/addcomment', authMiddleware, addComment);
 app.get('/getcomments/:id', getComments);
 app.get('/getfoodstats/:id', getFoodStats);
+
+//coupon routes
+app.post('/createcoupon', createCoupon);
+app.get('/getcoupons', getCoupons);
 
 const port = 5000;
 

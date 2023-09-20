@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { RouteList } from './routes';
 import { CommentProvider } from './context/comment/CommentContext';
 import { FilterProvider } from './context/Filter/FilterContext';
+import { CouponProvider } from './context/coupon/CouponContext';
 
 function App() {
   return (
@@ -16,13 +17,14 @@ function App() {
           <AuthProvider>
             <FilterProvider>
               <FoodProvider>
-                <CartProvider>
-                  <CommentProvider>
-                    <PrimarySearchAppBar />
-
-                    <RouteList />
-                  </CommentProvider>
-                </CartProvider>
+                <CouponProvider>
+                  <CartProvider>
+                    <CommentProvider>
+                      <PrimarySearchAppBar />
+                      <RouteList />
+                    </CommentProvider>
+                  </CartProvider>
+                </CouponProvider>
               </FoodProvider>
             </FilterProvider>
           </AuthProvider>

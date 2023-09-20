@@ -6,6 +6,7 @@ import AuthScreen from './pages/AuthScreen';
 import CartScreen from './pages/CartScreen';
 import { useFood } from './context/FoodContext';
 import FoodCardDetail from './pages/FoodCardDetail';
+import CouponScreen from './pages/CouponScreen';
 
 export const RouteList = () => {
   const { selectedFood } = useFood();
@@ -19,6 +20,7 @@ export const RouteList = () => {
         path="/food/:id"
         element={<FoodCardDetail food={selectedFood} />}
       />
+      <Route path="/coupons" element={<CouponScreen />} />
     </Routes>
   );
 };
