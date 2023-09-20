@@ -15,17 +15,22 @@ export const FoodProvider = ({ children }) => {
 
   const apiEndpoint = 'http://localhost:5000';
 
+  const getAllFoodsWithStats = async () => {
+    try {
+      const response = await axios.get(`${apiEndpoint}/getallfoodswithstats`);
+      setFoods(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get(`${apiEndpoint}/getALLfoods`)
-      .then((res) => setFoods(res.data))
-      .catch((error) => console.log(error));
+    getAllFoodsWithStats();
   }, []);
 
   const getFoodById = async (id) => {
     try {
       const response = await axios.get(`${apiEndpoint}/getfoodbyid/${id}`, {});
-
       setSelectedFood(response.data.food);
     } catch (error) {
       console.log('Error fetching food by ID:', error);
@@ -33,7 +38,9 @@ export const FoodProvider = ({ children }) => {
   };
 
   return (
-    <FoodContext.Provider value={{ Foods, selectedFood, getFoodById }}>
+    <FoodContext.Provider
+      value={{ Foods, selectedFood, getFoodById, getAllFoodsWithStats }}
+    >
       {children}
     </FoodContext.Provider>
   );

@@ -10,7 +10,7 @@ import {
 import { createUser, loginUser } from './controllers/userController.js';
 import {
   addFood,
-  getAllFoods,
+  getAllFoodsWithStats,
   getFoodById,
 } from './controllers/foodController.js';
 import {
@@ -35,8 +35,9 @@ app.post('/login', loginUser);
 
 //food routes
 app.post('/addfood', addFood);
-app.get('/getallfoods', getAllFoods);
+
 app.get('/getfoodbyid/:id', getFoodById);
+app.get('/getallfoodswithstats', getAllFoodsWithStats);
 
 //cart routes
 

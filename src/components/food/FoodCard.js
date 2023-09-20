@@ -12,7 +12,6 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { useFoodCart } from '../../context/CartContext';
 import { useFood } from '../../context/FoodContext';
-import { useComment } from '../../context/comment/CommentContext';
 
 import formatCurrency from 'format-currency';
 
@@ -21,16 +20,6 @@ export default function BasicCard(props) {
   const { getFoodById } = useFood();
 
   const [foodStats, setFoodStats] = useState(null);
-  const { getFoodStats } = useComment();
-
-  useEffect(() => {
-    const fetchFoodStats = async () => {
-      const stats = await getFoodStats(props.id);
-      setFoodStats(stats);
-    };
-
-    fetchFoodStats();
-  }, [props.id, getFoodStats]);
 
   const handleCardClick = async () => {
     await getFoodById(props.id);
@@ -83,7 +72,7 @@ export default function BasicCard(props) {
   };
 
   return (
-    <Card sx={{ width: 350, mt: 8, ml: { xs: 0, md: 8 } }}>
+    <Card sx={{ width: 350, mt: 3, ml: { xs: 0, md: 10 } }}>
       <div>
         <Typography level="title-lg">{props.name}</Typography>
         <Typography level="body-sm">{props.description}</Typography>
@@ -105,11 +94,11 @@ export default function BasicCard(props) {
             <Rating
               name="half-rating-read"
               size="small"
-              value={foodStats?.avgRating || 0}
+              value={props.avgRating || 0}
               precision={0.1}
               readOnly
             />
-            <p>{`(${foodStats?.commentCount || 0} Yorum)`}</p>
+            <p>{`(${props.commentCount || 0} Yorum)`}</p>
           </div>
         </div>
         <Button

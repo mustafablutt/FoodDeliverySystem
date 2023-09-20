@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { useAuth } from '../Auth/AuthContext';
+import { useFood } from '../FoodContext';
 
 export const CommentContext = createContext();
 
@@ -17,6 +18,7 @@ export const CommentProvider = ({ children }) => {
   const [comments, setComments] = useState([]);
 
   const { user } = useAuth();
+  const { getAllFoodsWithStats } = useFood();
 
   const apiEndpoint = 'http://localhost:5000';
 
@@ -41,6 +43,8 @@ export const CommentProvider = ({ children }) => {
 
       if (data.succeded) {
         getComments(foodId);
+        getAllFoodsWithStats();
+
         return { succeeded: true, message: 'Comment added successfully' };
       } else {
         return {
