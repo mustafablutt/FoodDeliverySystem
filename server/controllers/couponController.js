@@ -30,4 +30,19 @@ const getCoupons = async (req, res) => {
   }
 };
 
-export { createCoupon, getCoupons };
+const validateCoupon = async (couponCode) => {
+  const coupon = await Coupon.findOne({ code: couponCode });
+
+  if (!coupon) return { succeeded: false, message: 'Coupon does not exist' };
+
+  if (!coupon.isActive)
+    return { succeeded: false, message: 'Coupon is not active' };
+
+  const now = new Date();
+  if (coupon.validUntil && coupon.validUntil < now)
+    return { succeeded: false, message: 'Coupon has expired' };
+
+  return { succeeded: true, coupon };
+};
+
+export { createCoupon, getCoupons, validateCoupon };

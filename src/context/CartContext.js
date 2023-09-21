@@ -9,6 +9,10 @@ export const useFoodCart = () => {
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({ items: [] });
+  const [couponInfo, setCouponInfo] = useState({
+    isCouponApplied: false,
+    data: null,
+  });
 
   const { user } = useAuth();
 
@@ -20,12 +24,22 @@ export const CartProvider = ({ children }) => {
     return cart?.items.reduce((acc, item) => acc + item.quantity, 0) || 0;
   };
 
+  const getTotalPrice = () => {
+    return (
+      cart?.items.reduce(
+        (acc, item) => acc + item.food.price * item.quantity,
+        0
+      ) || 0
+    );
+  };
+
   const clearCart = () => {
     setCart({ items: [] });
   };
 
   useEffect(() => {
     getCart();
+    console.log('Cart:', cart);
   }, []);
 
   const getCart = async () => {
@@ -64,8 +78,8 @@ export const CartProvider = ({ children }) => {
 
       const data = await response.json();
       if (data.succeded) {
-        getCart();
         setCart({ items: data.cart.items });
+        getCart();
         const event = new CustomEvent('itemAddedToCart', { detail: foodId });
         window.dispatchEvent(event);
       }
@@ -135,6 +149,33 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const applyCoupon = async (couponCode, totalPrice) => {
+    try {
+      const response = await fetch(`${apiEndpoint}/applycoupon`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ couponCode, totalPrice }),
+      });
+
+      const data = await response.json();
+      if (data.succeded) {
+        console.log('Coupon applied:', data);
+        alert('Kupon başarıyla uygulandı!');
+        setCouponInfo({ isCouponApplied: true, data });
+      } else {
+        console.log('Coupon not applied:', data);
+        alert('Kupon uygulanamadı: ' + data.message);
+        setCouponInfo({ isCouponApplied: false, data: null });
+      }
+    } catch (error) {
+      console.log('Error applying coupon:', error);
+      alert('Bir hata oluştu.');
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -143,9 +184,11 @@ export const CartProvider = ({ children }) => {
         addToCart,
         removeItemByQuantity,
         removeAllItemFromCart,
-
+        getTotalPrice,
         getTotalItemCount,
         clearCart,
+        applyCoupon,
+        couponInfo,
       }}
     >
       {children}

@@ -71,8 +71,16 @@ export default function CartScreenDetail() {
                   variant="subtitle1"
                   color="text.secondary"
                   component="div"
+                  style={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '250px', // Bu değeri ihtiyaca göre ayarlayabilirsiniz
+                  }}
                 >
-                  Tahmini Kargoya Teslim: 2 gün içinde
+                  {item.food.description.length > 50
+                    ? item.food.description.substring(0, 47) + '...'
+                    : item.food.description}
                 </Typography>
               </CardContent>
             </Box>

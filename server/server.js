@@ -18,6 +18,7 @@ import {
   addItemToCart,
   removeByQuantity,
   removeItemFromCart,
+  applyCoupon,
 } from './controllers/cartController.js';
 
 import { createCoupon, getCoupons } from './controllers/couponController.js';
@@ -48,6 +49,7 @@ app.get('/getcart', authMiddleware, getCart);
 app.post('/addtocart', authMiddleware, addItemToCart);
 app.post('/removebyquantity', authMiddleware, removeByQuantity);
 app.post('/removeitemfromcart', authMiddleware, removeItemFromCart);
+app.post('/applycoupon', authMiddleware, applyCoupon);
 
 //comment routes
 app.post('/addcomment', authMiddleware, addComment);

@@ -1,4 +1,5 @@
 import Cart from '../models/cartModel.js';
+import { validateCoupon } from './couponController.js';
 
 const getCart = async (req, res) => {
   try {
@@ -132,4 +133,47 @@ const removeItemFromCart = async (req, res) => {
   }
 };
 
-export { getCart, addItemToCart, removeByQuantity, removeItemFromCart };
+const applyCoupon = async (req, res) => {
+  try {
+    const { couponCode, totalPrice } = req.body;
+
+    const userId = req.userId;
+    const cart = await Cart.findOne({ user: userId }).populate('items.food');
+
+    if (!cart) {
+      return res.status(404).json({
+        succeded: false,
+        message: 'Cart not found',
+      });
+    }
+
+    const { succeeded, message, coupon } = await validateCoupon(couponCode);
+
+    if (!succeeded) {
+      return res.status(400).json({ succeded: false, message });
+    }
+
+    const discountAmount = (totalPrice * coupon.discountPercentage) / 100;
+    const finalPrice = totalPrice - discountAmount;
+
+    return res.status(200).json({
+      succeded: true,
+      coupon,
+      discountAmount,
+      finalPrice,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      succeded: false,
+      message: error.message,
+    });
+  }
+};
+
+export {
+  getCart,
+  addItemToCart,
+  removeByQuantity,
+  removeItemFromCart,
+  applyCoupon,
+};
