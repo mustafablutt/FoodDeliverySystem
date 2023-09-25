@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import BasicCard from './FoodCard';
-import NavTabs from '../filterTab/filterTab';
-import { useFood } from '../../context/FoodContext';
-import { useFilter } from '../../context/Filter/FilterContext';
+import BasicCard from '../components/food/FoodCard';
+import NavTabs from '../components/filterTab/FilterTab';
+import { useFood } from '../context/Food/FoodContext';
+import { useFilter } from '../context/Filter/FilterContext';
 
 const ShowCard = () => {
   const { Foods } = useFood();

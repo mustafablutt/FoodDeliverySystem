@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { useAuth } from '../Auth/AuthContext';
-import { useFood } from '../FoodContext';
+import { useFood } from '../Food/FoodContext';
 
 export const CommentContext = createContext();
 

@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TextField } from '@mui/material';
 import AddRating from './AddRating';
-import { useComment } from '../../context/comment/CommentContext';
+import { useComment } from '../../context/Comment/CommentContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth/AuthContext';
 import { useState } from 'react';
@@ -52,8 +52,6 @@ export default function AddComment({ food }) {
     }
 
     const response = await addComment(food._id, commentValue, ratingValue);
-
-    console.log('response: ', response);
 
     if (response && response.succeeded) {
       setSnackbarMessage('Yemek Başıryla Değerlendirildi.');

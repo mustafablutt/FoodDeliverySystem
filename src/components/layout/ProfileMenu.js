@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DiscountOutlinedIcon from '@mui/icons-material/DiscountOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -128,11 +129,19 @@ export default function StyledProfileMenu() {
               İndirim Kuponlarım
             </MenuItem>
           </Link>
-
-          <MenuItem onClick={handleClose} disableRipple>
-            <PersonOutlineOutlinedIcon />
-            Kullanıcı Bilgilerim
-          </MenuItem>
+          <Link
+            to="/orders"
+            style={{
+              cursor: 'pointer',
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+          >
+            <MenuItem onClick={handleClose} disableRipple>
+              <ShoppingCartIcon />
+              Geçmiş Siparişlerim
+            </MenuItem>
+          </Link>
 
           <MenuItem
             onClick={() => {

@@ -6,16 +6,18 @@ import AddComment from '../components/comment/AddComment';
 
 import { Button } from '@mui/material';
 import CommentCard from '../components/comment/CommentCard';
-import { useComment } from '../context/comment/CommentContext';
+import { useComment } from '../context/Comment/CommentContext';
 import { Paper, Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
-import { useFood } from '../context/FoodContext';
+import { useFood } from '../context/Food/FoodContext';
 
 const FoodCardDetail = ({ food }) => {
   const { id } = useParams();
   const { getFoodById } = useFood();
   const { comments, getComments } = useComment();
+  const navigate = useNavigate();
 
   const [foodStats, setFoodStats] = useState(null);
   const { getFoodStats } = useComment();
@@ -40,6 +42,10 @@ const FoodCardDetail = ({ food }) => {
       getComments(food._id);
     }
   }, [food, getComments]);
+
+  const handleClick = () => {
+    navigate('/cart-detail');
+  };
 
   if (!food) return <p>Loading...</p>;
 
@@ -84,6 +90,7 @@ const FoodCardDetail = ({ food }) => {
               }}
             >
               <Button
+                onClick={handleClick}
                 variant="contained"
                 style={{
                   marginRight: '30px',

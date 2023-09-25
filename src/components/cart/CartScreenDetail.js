@@ -10,7 +10,7 @@ import formatCurrency from 'format-currency';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
 
-import { useFoodCart } from '../../context/CartContext';
+import { useFoodCart } from '../../context/Cart/CartContext';
 import GroupedButton from './GroupedButton';
 
 export default function CartScreenDetail() {
@@ -22,8 +22,8 @@ export default function CartScreenDetail() {
 
   return (
     <>
-      {cart?.items.length !== 0 &&
-        cart?.items.map((item, index) => (
+      {cart?.items?.length > 0 &&
+        cart?.items?.map((item, index) => (
           <Card
             sx={{
               display: 'flex',
@@ -42,7 +42,7 @@ export default function CartScreenDetail() {
                 width: isMobile ? '100%' : 130,
                 height: isMobile ? 200 : 130,
               }}
-              image={item.food.imageUrl}
+              image={item?.food?.imageUrl}
               alt="image"
             />
             <Box
@@ -64,7 +64,7 @@ export default function CartScreenDetail() {
                     mb: 1,
                   }}
                 >
-                  {item.food.name}
+                  {item?.food?.name}
                 </Typography>
 
                 <Typography
@@ -75,12 +75,12 @@ export default function CartScreenDetail() {
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    maxWidth: '250px', // Bu değeri ihtiyaca göre ayarlayabilirsiniz
+                    maxWidth: '250px',
                   }}
                 >
-                  {item.food.description.length > 50
-                    ? item.food.description.substring(0, 47) + '...'
-                    : item.food.description}
+                  {item?.food?.description?.length > 50
+                    ? item?.food?.description.substring(0, 47) + '...'
+                    : item?.food?.description ?? ''}
                 </Typography>
               </CardContent>
             </Box>
@@ -94,7 +94,7 @@ export default function CartScreenDetail() {
                 paddingLeft: 10,
               }}
             >
-              <GroupedButton id={item.food._id} />
+              <GroupedButton id={item?.food?._id} />
             </Box>
 
             <Box
@@ -113,7 +113,7 @@ export default function CartScreenDetail() {
                 component="div"
                 noWrap
               >
-                {formatCurrency(`${item.food.price * item.quantity}`, opts)}
+                {formatCurrency(`${item?.food?.price * item?.quantity}`, opts)}
               </Typography>
             </Box>
             <Box
@@ -129,7 +129,7 @@ export default function CartScreenDetail() {
               <IconButton edge="end" aria-label="delete">
                 <DeleteOutlineOutlinedIcon
                   onClick={async () => {
-                    await removeAllItemFromCart(item.food._id);
+                    await removeAllItemFromCart(item?.food?._id);
                   }}
                 />
               </IconButton>

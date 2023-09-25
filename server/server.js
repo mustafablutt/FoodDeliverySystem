@@ -23,6 +23,8 @@ import {
 
 import { createCoupon, getCoupons } from './controllers/couponController.js';
 
+import { createOrder, getAllOrders } from './controllers/orderController.js';
+
 import cors from 'cors';
 
 dotenv.config();
@@ -59,6 +61,11 @@ app.get('/getfoodstats/:id', getFoodStats);
 //coupon routes
 app.post('/createcoupon', createCoupon);
 app.get('/getcoupons', getCoupons);
+
+//order routes
+
+app.post('/createorder', authMiddleware, createOrder);
+app.get('/getorders', authMiddleware, getAllOrders);
 
 const port = 5000;
 

@@ -94,7 +94,7 @@ export default function CustomizedTabs() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
+
     switch (newValue) {
       case 1:
         setFilter('likes');

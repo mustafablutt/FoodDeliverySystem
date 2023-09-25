@@ -10,8 +10,8 @@ import { Rating } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { useFoodCart } from '../../context/CartContext';
-import { useFood } from '../../context/FoodContext';
+import { useFoodCart } from '../../context/Cart/CartContext';
+import { useFood } from '../../context/Food/FoodContext';
 
 import formatCurrency from 'format-currency';
 

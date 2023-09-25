@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import AddIcon from '@mui/icons-material/Add';
-import { useFoodCart } from '../../context/CartContext';
+import { useFoodCart } from '../../context/Cart/CartContext';
 
 const GroupedButton = ({ id }) => {
   const { cart, getCart, removeItemByQuantity, addToCart } = useFoodCart();
@@ -20,6 +20,7 @@ const GroupedButton = ({ id }) => {
   const IncNum = async () => {
     if (findFood) {
       await addToCart(id);
+      await getCart();
     }
   };
 

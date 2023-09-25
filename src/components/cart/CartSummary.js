@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { useFoodCart } from '../../context/CartContext';
+import { useFoodCart } from '../../context/Cart/CartContext';
 
 export default function CartSummary() {
   const { couponInfo, getTotalPrice } = useFoodCart();

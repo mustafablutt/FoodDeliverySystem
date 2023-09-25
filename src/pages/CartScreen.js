@@ -1,23 +1,35 @@
-import { Grid, Typography } from '@mui/material';
-import { Divider } from '@mui/material';
+import {
+  Divider,
+  Button,
+  TextField,
+  Grid,
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import CartScreenDetail from '../components/cart/CartScreenDetail';
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import { useFoodCart } from '../context/CartContext';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { useFoodCart } from '../context/Cart/CartContext';
 import CartSummary from '../components/cart/CartSummary';
+import { useOrder } from '../context/Order/OrderContext';
+import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {
-  const { cart, getTotalPrice, getTotalItemCount, applyCoupon, couponInfo } =
-    useFoodCart();
+  const {
+    cart,
+    getTotalPrice,
+    getTotalItemCount,
+    applyCoupon,
+    couponInfo,
+    clearCart,
+  } = useFoodCart();
+  const { createOrder } = useOrder();
   const [couponCode, setCouponCode] = useState('');
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCouponCode(e.target.value);
@@ -25,7 +37,6 @@ const CartScreen = () => {
 
   useEffect(() => {
     const totalPrice = getTotalPrice();
-    console.log('totalPrice', totalPrice);
   }, [cart, getTotalPrice]);
 
   const handleApplyCoupon = () => {
@@ -35,7 +46,34 @@ const CartScreen = () => {
       return;
     }
     applyCoupon(couponCode, getTotalPrice());
+
     setOpen(false);
+  };
+
+  useEffect(() => {
+    if (couponInfo && couponInfo.isCouponApplied) {
+      console.log('couponInfo', couponInfo);
+    }
+  }, [couponInfo]);
+
+  const handleCreateOrder = async () => {
+    let finalPrice, couponCode;
+
+    if (couponInfo && couponInfo.isCouponApplied) {
+      finalPrice = couponInfo.data.finalPrice;
+      couponCode = couponInfo.data.coupon.code;
+    } else {
+      finalPrice = getTotalPrice();
+      couponCode = null;
+    }
+
+    const result = await createOrder(finalPrice, couponCode);
+
+    if (result) {
+      alert('Sipariş başarıyla oluşturuldu.');
+      navigate('/orders');
+      clearCart();
+    }
   };
 
   const handleClickOpen = () => {
@@ -100,6 +138,7 @@ const CartScreen = () => {
                 <br />
 
                 <Button
+                  onClick={handleCreateOrder}
                   variant="contained"
                   sx={{
                     minWidth: '275px',
@@ -109,7 +148,7 @@ const CartScreen = () => {
                     },
                   }}
                 >
-                  Sepetİ Onayla{' '}
+                  Siparişi Tamamla{' '}
                 </Button>
               </div>
             </Grid>

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { useAuth } from './Auth/AuthContext';
+import { useAuth } from '../Auth/AuthContext';
 
 export const CartContext = createContext();
 
@@ -36,11 +36,6 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     setCart({ items: [] });
   };
-
-  useEffect(() => {
-    getCart();
-    console.log('Cart:', cart);
-  }, []);
 
   const getCart = async () => {
     try {

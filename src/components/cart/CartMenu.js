@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import formatCurrency from 'format-currency';
 
 import { Typography } from '@mui/material';
-import { useFoodCart } from '../../context/CartContext';
+import { useFoodCart } from '../../context/Cart/CartContext';
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
